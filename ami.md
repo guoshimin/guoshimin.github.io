@@ -1,3 +1,6 @@
+Making an AMI based on Ubuntu 14.04
+==========
+
 Prep instructions from harold:
 ```
 brew tap homebrew/dupes (to grab rsync 3.1)
