@@ -9,3 +9,7 @@ brew install ansible (if on linux and need >1.6, sudo apt-get update && sudo apt
 sudo pip install boto
 sudo pip install paramiko
 ```
+
+ami-06e30735: Ubuntu trusty 14.04
+
+Project killed (for now) because 14.04 doesn't have java 8.
