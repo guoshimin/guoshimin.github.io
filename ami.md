@@ -101,3 +101,15 @@ jdk jcmd /usr/lib/jvm/jdk1.8.0_66/bin/jcmd
 
 
 - sudo update-java-alternatives  -s jdk1.8.0_66
+
+image: ami-1d776d7c
+
+Also need to install latest kernel
+
+```
+- name: update kernel
+  tags: kernel
+  apt: pkg=linux-image-4.2.0-23-generic state=installed
+```
+
+instance: i-9e748759
