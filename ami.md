@@ -17,20 +17,19 @@ Project killed (for now) because 14.04 doesn't have java 8.
 Project unkilled, will install java 8 manually.
 
 
-universe/bin/create_images.py: chanage baseami
+- bin/create_images.py: chanage baseami
+- ami/ansible/roles/common/tasks/main.yml: comment out java8
+- ami/ansible/roles/*/tasks/main.yml: remove z from rsync_opts, add compress=\"no\"
+- ami/charms/worker/var/lib/lxc/spark_template/rootfs/install-java: remove java8
+- configs/account_ids: accounts that the image will be shared with
 
-universe/ami/ansible/roles/common/tasks/main.yml: comment out java8
 
-
-universe/ami/ansible/roles/*/tasks/main.yml: remove z from rsync_opts, add compress=\"no\"
-
-ami/charms/worker/var/lib/lxc/spark_template/rootfs/install-java: remove java8
-
-configs/account_ids: accounts that the image will be shared with
-
-./bin/create_images.py -k gov-shard-amis -r false -i /Users/harold/Downloads/gov-shard-amis.pem -b your_branch_created_by_pushall
-
+```
 bin/create_images.py -k shimin-dev -r false -i ~/.ssh/shimin-dev.pem -b 2.10.1
+```
+`-r false` is supposed to say "don't remove ssh keys" but the code is broken so it doesn't work.
+
+You must specify AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as environtment variables. It doesn't search ~/.aws/credentials.
 
 try 1: failed because lxc trying to download utopic image
 
@@ -42,12 +41,14 @@ built ami ami-f55b4194
 
 launched instance with ami: i-b31d9869
 
-get java tarball from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+Install Java 8:
 
-tar zxf jdk-8u66-linux-x64.gz
+- get java tarball from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-sudo mv jdk1.8.0_66 /usr/lib/jvm
-/usr/lib/jvm/.jdk1.8.0_66.jinfo
+- tar zxf jdk-8u66-linux-x64.gz
+
+- sudo mv jdk1.8.0_66 /usr/lib/jvm
+- add /usr/lib/jvm/.jdk1.8.0_66.jinfo
 ```
 name=jdk1.8.0_66
 priority=1081
@@ -96,7 +97,7 @@ jdk wsgen /usr/lib/jvm/jdk1.8.0_66/bin/wsgen
 jdk jcmd /usr/lib/jvm/jdk1.8.0_66/bin/jcmd
 ```
 
-cat /usr/lib/jvm/.jdk1.8.0_66.jinfo | awk 'NF == 3 {print "/usr/bin/" $2 " " $2 " " $3 " 30 \n"}' | xargs -t -n4 sudo update-alternatives --install
+- cat /usr/lib/jvm/.jdk1.8.0_66.jinfo | awk 'NF == 3 {print "/usr/bin/" $2 " " $2 " " $3 " 30 \n"}' | xargs -t -n4 sudo update-alternatives --install
 
 
-sudo update-java-alternatives  -s jdk1.8.0_66
+- sudo update-java-alternatives  -s jdk1.8.0_66
