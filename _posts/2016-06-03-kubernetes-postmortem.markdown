@@ -15,7 +15,7 @@ Issues:
   - weird symptoms: can't `docker inspect` any images
 - On dev master, kubelet died due to dependencies and didn't restart due to my misunderstanding of certain aspects of how systemd dependencies work.
 
-Timeline for the dev master outage:
+Timeline for the dev master outage: (times are UTC)
 
 - Jun 04 02:38:08 flanneld process died. flanneld.service entered failed state.
 - Jun 04 02:38:13 systemd started to try to restart flanneld. It was 5 seconds after flanneld died because `RestartSec=5s` was configured for flanneld.service
